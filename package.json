@@ -1,0 +1,23 @@
+{
+  "name": "surface-scanner-backend",
+  "version": "1.0.0",
+  "description": "Backend for the surface-scanner application.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cs394-s19/surface-scanner-backend.git"
+  },
+  "author": "Deok Filho, Spencer Colton, John Nguyen, Yibo Pan, Chenbo Tang, Harry Reichert",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cs394-s19/surface-scanner-backend/issues"
+  },
+  "homepage": "https://github.com/cs394-s19/surface-scanner-backend#readme",
+  "dependencies": {
+    "uuid": "^3.3.2",
+    "ws": "^7.0.0"
+  }
+}
