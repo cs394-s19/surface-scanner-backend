@@ -83,6 +83,20 @@ const incoming = function(raw_data) {
                 action: "send_photo",
                 data: photo_data
             }));
+
+
+            break;
         }
+        case "send_control_info": {
+            const { uuid } = data;
+            const scan = connections[uuid].scan;
+
+            scan.send(JSON.stringify({
+                action: action,
+                data: data
+            }));
+        }
+
+            break;
     }
 };
