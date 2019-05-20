@@ -4,9 +4,14 @@ const uuidv4 = require('uuid/v4');
 const connections_waiting = []
 const connections = {}
 
+let port = process.env.PORT;
+if (port == null || port == "") {
+    port = 12345;
+}
+
 const wss = new WebSocket.Server({
     perMessageDeflate: false,
-    port: 12345
+    port: port
 });
 
 wss.on('connection', (ws, req) => {
