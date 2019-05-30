@@ -1,5 +1,7 @@
 const WebSocket = require('ws');
 const uuidv4 = require('uuid/v4');
+let {PythonShell} = require('python-shell');
+let pyshell = new PythonShell('image_processing.py');
 
 const connections_waiting = [];
 const connections = {};

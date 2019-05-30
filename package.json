@@ -4,7 +4,8 @@
   "description": "Backend for the surface-scanner application.",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -17,6 +18,8 @@
   },
   "homepage": "https://github.com/cs394-s19/surface-scanner-backend#readme",
   "dependencies": {
+    "mocha": "^6.1.4",
+    "python-shell": "^1.0.7",
     "uuid": "^3.3.2",
     "ws": "^7.0.0"
   }
