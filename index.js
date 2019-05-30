@@ -4,6 +4,9 @@ const uuidv4 = require('uuid/v4');
 const connections_waiting = [];
 const connections = {};
 
+// When running on Heroku's servers, they dynamically decide which port ot allocate to this process via the
+// process.env.PORT process variable. When running heroku locally, it uses port 5000 as default.
+// To run locally, first install Heroku's CLI, then do "heroku local web" on the terminal in the root of this project.
 let port = process.env.PORT;
 if (port == null || port == "") {
     port = 5000;
