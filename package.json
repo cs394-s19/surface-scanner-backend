@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/cs394-s19/surface-scanner-backend#readme",
   "dependencies": {
+    "express": "^4.17.1",
     "mocha": "^6.1.4",
     "python-shell": "^1.0.7",
     "uuid": "^3.3.2",

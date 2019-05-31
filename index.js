@@ -1,7 +1,9 @@
 const WebSocket = require('ws');
 const uuidv4 = require('uuid/v4');
-let {PythonShell} = require('python-shell');
-let pyshell = new PythonShell('image_processing.py');
+var express = require('express');
+var app = express();
+
+
 
 const connections_waiting = [];
 const connections = {};
@@ -13,6 +15,19 @@ let port = process.env.PORT;
 if (port == null || port == "") {
     port = 5000;
 }
+
+
+app.get('/py', function (req, res) {
+    var spawn = require("child_process").spawn; 
+    var process = spawn('python3', ['./deflectomotery.py',
+        'Superman-Logo.png', 
+        './', 
+      ]);
+    
+      process.stdout.on('data', function (data) {
+        res.send(data.toString());
+      });
+  })
 
 const wss = new WebSocket.Server({
     perMessageDeflate: false,
@@ -113,3 +128,7 @@ const incoming = function(raw_data) {
             break;
     }
 };
+
+app.listen(3000, function () {
+    console.log('server running on port 3000');
+  })
