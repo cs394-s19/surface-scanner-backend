@@ -1,9 +1,20 @@
+let {PythonShell} = require('python-shell')
 const WebSocket = require('ws');
 const uuidv4 = require('uuid/v4');
 var express = require('express');
 var app = express();
 
+// let options = {
+//   pythonPath: 'path/to/python',
+//   pythonOptions: ['-u'], // get print results in real-time
+//   scriptPath: 'path/to/my/scripts',
+//   args: ['value1', 'value2', 'value3']
+// };
 
+PythonShell.run('deflectomotery.py', null, function (err) {
+  if (err) throw err;
+  console.log('finished');
+});
 
 const connections_waiting = [];
 const connections = {};

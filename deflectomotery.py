@@ -62,7 +62,8 @@ def deflectomotery(objectName, imgDir):
 if __name__ == '__main__':
 
     # Input image order: v1, v2, v3, v4, h1, h2, h3, h4, (Full off, Full on)
-    objectName = sys.argv[1]
-    imgDir = os.path.normpath(sys.argv[2])
-
+    # objectName = sys.argv[1]
+    objectName = 'Superman-Logo.png'
+    # imgDir = os.path.normpath(sys.argv[2])
+    imgDir = os.path.normpath('./')
     deflectomotery(objectName, imgDir)
