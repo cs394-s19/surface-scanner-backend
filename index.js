@@ -1,8 +1,6 @@
 let {PythonShell} = require('python-shell')
 const WebSocket = require('ws');
 const uuidv4 = require('uuid/v4');
-var express = require('express');
-var app = express();
 var fs = require('fs');
 
 // let options = {
@@ -25,18 +23,6 @@ if (port == null || port == "") {
     port = 5000;
 }
 
-
-app.get('/py', function (req, res) {
-    var spawn = require("child_process").spawn; 
-    var process = spawn('python3', ['./deflectomotery.py',
-        'Superman-Logo.png', 
-        './', 
-      ]);
-    
-      process.stdout.on('data', function (data) {
-        res.send(data.toString());
-      });
-  })
 
 const wss = new WebSocket.Server({
     perMessageDeflate: false,
@@ -163,6 +149,3 @@ function base64Encode(file) {
     return body.toString('base64');
 }
 
-app.listen(3000, function () {
-    console.log('server running on port 3000');
-  })
