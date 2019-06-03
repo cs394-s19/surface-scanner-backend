@@ -3,6 +3,7 @@ const WebSocket = require('ws');
 const uuidv4 = require('uuid/v4');
 var express = require('express');
 var app = express();
+var fs = require('fs');
 
 // let options = {
 //   pythonPath: 'path/to/python',
@@ -11,10 +12,7 @@ var app = express();
 //   args: ['value1', 'value2', 'value3']
 // };
 
-PythonShell.run('deflectomotery.py', null, function (err) {
-  if (err) throw err;
-  console.log('finished');
-});
+
 
 const connections_waiting = [];
 const connections = {};
@@ -126,6 +124,26 @@ const incoming = function(raw_data) {
 
             break;
         }
+        case "end_scan": {
+            const scan = connections[uuid].scan;
+            
+            PythonShell.run('deflectomotery.py', null, function (err) {
+                if (err) throw err;
+                console.log('finished');
+            });
+
+            var base64String = base64Encode('./normal.png');
+            if (scan === null)
+                return;
+
+            scan.send(JSON.stringify({
+                action: "end_scan",
+                data: base64String
+            }));
+
+
+            break;
+        }
         case "send_control_info": {
             const { uuid } = data;
             const scan = connections[uuid].scan;
@@ -139,6 +157,11 @@ const incoming = function(raw_data) {
             break;
     }
 };
+
+function base64Encode(file) {
+    var body = fs.readFileSync(file);
+    return body.toString('base64');
+}
 
 app.listen(3000, function () {
     console.log('server running on port 3000');
