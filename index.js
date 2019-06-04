@@ -141,7 +141,6 @@ const incoming = function(raw_data) {
                 data: base64String
             }));
 
-
             break;
         }
         case "send_control_info": {
@@ -152,9 +151,17 @@ const incoming = function(raw_data) {
                 action: action,
                 data: data
             }));
-        }
 
             break;
+        }
+        case "start_scan": {
+            const { uuid } = data;
+            const scan = connections[uuid].scan;
+
+            scan.send(JSON.stringify({
+                action: action
+            }));
+        }
     }
 };
 
