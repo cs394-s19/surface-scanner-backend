@@ -100,14 +100,6 @@ const incoming = function(raw_data) {
 
             break;
         }
-        case "take_picture": {
-            const {uuid} = data;
-            
-            connections[uuid].scan.send(JSON.stringify({
-                action: "take_picture"
-            }));
-            break;
-        }
         case "send_photo": {
             const { data: photo_data, uuid } = data;
 
@@ -161,6 +153,8 @@ const incoming = function(raw_data) {
             scan.send(JSON.stringify({
                 action: action
             }));
+
+            break;
         }
     }
 };
