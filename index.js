@@ -16,6 +16,7 @@ var fs = require('fs');
 
 const connections_waiting = [];
 const connections = {};
+let pic_data = []
 
 // When running on Heroku's servers, they dynamically decide which port ot allocate to this process via the
 // process.env.PORT process variable. When running heroku locally, it uses port 5000 as default.
@@ -54,6 +55,7 @@ wss.on('connection', (ws, req) => {
 const incoming = function(raw_data) {
     const { action, data } = JSON.parse(raw_data);
     console.log("New action: " + action);
+    
 
     switch (action) {
         case "set_party": {
@@ -117,18 +119,24 @@ const incoming = function(raw_data) {
             break;
         }
         case "end_scan": {
-            const scan = connections[uuid].scan;
+            const { data: photo_data, uuid } = data;
+            const control = connections[uuid].control;
             
             PythonShell.run('deflectomotery.py', null, function (err) {
                 if (err) throw err;
                 console.log('finished');
             });
+            
+            
 
-            var base64String = base64Encode('./normal.png');
-            if (scan === null)
+            // var base64String = base64Encode('./normal.png');
+            
+            var base64String = base64Encode('./Superman-Logo.png');
+            
+            if (control === null)
                 return;
 
-            scan.send(JSON.stringify({
+            control.send(JSON.stringify({
                 action: "end_scan",
                 data: base64String
             }));
@@ -156,6 +164,13 @@ const incoming = function(raw_data) {
 
             break;
         }
+        case 'send_scan_photo':{
+            const { data: photo_data, index: photo_index} = data;
+            pic_data.push({data:photo_data, index: photo_index})
+            console.log('index', photo_index)
+            break;
+            
+        } 
     }
 };
 
