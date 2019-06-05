@@ -82,14 +82,6 @@ const incoming = function(raw_data) {
 
             break;
         }
-        case "take_picture": {
-            const {uuid} = data;
-            
-            connections[uuid].scan.send(JSON.stringify({
-                action: "take_picture"
-            }));
-            break;
-        }
         case "send_photo": {
             const { data: photo_data, uuid } = data;
 
@@ -118,7 +110,6 @@ const incoming = function(raw_data) {
                 data: base64String
             }));
 
-
             break;
         }
         case "send_control_info": {
@@ -129,9 +120,19 @@ const incoming = function(raw_data) {
                 action: action,
                 data: data
             }));
-        }
 
             break;
+        }
+        case "start_scan": {
+            const { uuid } = data;
+            const scan = connections[uuid].scan;
+
+            scan.send(JSON.stringify({
+                action: action
+            }));
+
+            break;
+        }
     }
 };
 
