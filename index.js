@@ -3,17 +3,13 @@ const WebSocket = require('ws');
 const uuidv4 = require('uuid/v4');
 var fs = require('fs');
 
-// let options = {
-//   pythonPath: 'path/to/python',
-//   pythonOptions: ['-u'], // get print results in real-time
-//   scriptPath: 'path/to/my/scripts',
-//   args: ['value1', 'value2', 'value3']
-// };
-
-
-
 const connections_waiting = [];
 const connections = {};
+
+PythonShell.run('deflectomotery.py', null, function (err) {
+    if (err) throw err;
+    console.log('finished');
+});
 
 // When running on Heroku's servers, they dynamically decide which port ot allocate to this process via the
 // process.env.PORT process variable. When running heroku locally, it uses port 5000 as default.
@@ -112,11 +108,6 @@ const incoming = function(raw_data) {
         }
         case "end_scan": {
             const scan = connections[uuid].scan;
-            
-            PythonShell.run('deflectomotery.py', null, function (err) {
-                if (err) throw err;
-                console.log('finished');
-            });
 
             var base64String = base64Encode('./normal.png');
             if (scan === null)
